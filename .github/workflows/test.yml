@@ -1,0 +1,24 @@
+name: "action-test"
+on:
+  push:
+    branches:
+      - '*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [12.x]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Fetch release by commit sha
+        uses: cardinalby/git-get-release-action@test
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          commitSha: 57be0706562549f20cd96a2bbd01c76dc053de0b
