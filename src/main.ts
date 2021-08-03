@@ -58,7 +58,7 @@ async function runImpl() {
         });
         ghActions.info(`Retrieving release by prefix full ${JSON.stringify(releases)}...`);
         const byPrefix = releases.filter(
-            (release): boolean => release.name!.includes(actionInputs.searchPrefix!)
+            (release): boolean => release.tag_name!.includes(actionInputs.searchPrefix!)
         );
         const latest = byPrefix.sort(
             (a,b): number => new Date(b.created_at).valueOf() - new Date(a.created_at).valueOf()
