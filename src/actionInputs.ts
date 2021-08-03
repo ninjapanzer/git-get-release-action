@@ -7,4 +7,5 @@ export const actionInputs = {
     releaseName: inputs.getString('releaseName', false),
     latest: inputs.getBool('latest', false),
     searchLimit: inputs.getInt('searchLimit', false) || 90,
+    searchPrefix: inputs.getString('searchPrefix', false),
 }
