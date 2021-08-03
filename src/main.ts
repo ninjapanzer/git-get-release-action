@@ -57,10 +57,10 @@ async function runImpl() {
             per_page: 100,
         });
         const byPrefix = releases.filter(
-            (release) => release.name.includes(actionInputs.searchPrefix)
+            (release): boolean => release.name!.includes(actionInputs.searchPrefix!)
         );
         const latest = byPrefix.sort(
-            (a,b) => new Date(b.created_at) - new Date(a.created_at)
+            (a,b): number => new Date(b.created_at).valueOf() - new Date(a.created_at).valueOf()
         );
         releaseResponse = latest[0]
     } else if (context.sha) {

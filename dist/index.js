@@ -16,6 +16,7 @@ exports.actionInputs = {
     releaseName: github_actions_utils_1.actionInputs.getString('releaseName', false),
     latest: github_actions_utils_1.actionInputs.getBool('latest', false),
     searchLimit: github_actions_utils_1.actionInputs.getInt('searchLimit', false) || 90,
+    searchPrefix: github_actions_utils_1.actionInputs.getString('searchPrefix', false),
 };
 
 
@@ -154,6 +155,12 @@ function runImpl() {
                 owner,
                 repo
             })).data;
+        }
+        else if (actionInputs_1.actionInputs.searchPrefix) {
+            const releases = yield github.paginate("GET /repos/{owner}/{repo}/releases", Object.assign(Object.assign({}, github_1.context.repo), { per_page: 100 }));
+            const byPrefix = releases.filter((release) => release.name.includes(actionInputs_1.actionInputs.searchPrefix));
+            const latest = byPrefix.sort((a, b) => new Date(b.created_at).valueOf() - new Date(a.created_at).valueOf());
+            releaseResponse = latest[0];
         }
         else if (github_1.context.sha) {
             ghActions.info(`Retrieving release for current commit ${github_1.context.sha}...`);
