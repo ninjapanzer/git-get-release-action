@@ -56,6 +56,7 @@ async function runImpl() {
             ...context.repo,
             per_page: 100,
         });
+        ghActions.info(`Retrieving release by prefix full ${releases}...`);
         const byPrefix = releases.filter(
             (release): boolean => release.name!.includes(actionInputs.searchPrefix!)
         );
