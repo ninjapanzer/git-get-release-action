@@ -56,14 +56,14 @@ async function runImpl() {
             ...context.repo,
             per_page: 100,
         });
-        ghActions.info(`Retrieving release by prefix full ${JSON.stringify(releases)}...`);
         const byPrefix = releases.filter(
             (release): boolean => release.tag_name!.includes(actionInputs.searchPrefix!)
         );
+        ghActions.info(`Retrieving release by prefix ${JSON.stringify(byPrefix)}...`);
         const latest = byPrefix.sort(
             (a,b): number => new Date(b.created_at).valueOf() - new Date(a.created_at).valueOf()
         );
-        ghActions.info(`Retrieving release by prefix ${latest}...`);
+        ghActions.info(`Retrieving release by prefix latest ${latest}...`);
         releaseResponse = latest[0]
     } else if (context.sha) {
         ghActions.info(`Retrieving release for current commit ${context.sha}...`);
