@@ -15,6 +15,7 @@ Specify 1 input from the list to search release by:
 * `commitSha` SHA of commit. Can be used to find a draft release.
 * `releaseName` Release name. Returns most recent found. Can be used to find a draft release.
 * `latest` Set `1` or `true` to get the latest non-draft release.
+* `searchPrefix` will walk all releases and return the latest that has a matching prefix
 
 If no inputs specified, the action will try to get release for the current commit SHA.
 
