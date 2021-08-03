@@ -158,7 +158,7 @@ function runImpl() {
         }
         else if (actionInputs_1.actionInputs.searchPrefix) {
             const releases = yield github.paginate("GET /repos/{owner}/{repo}/releases", Object.assign(Object.assign({}, github_1.context.repo), { per_page: 100 }));
-            ghActions.info(`Retrieving release by prefix full ${releases}...`);
+            ghActions.info(`Retrieving release by prefix full ${JSON.stringify(releases)}...`);
             const byPrefix = releases.filter((release) => release.name.includes(actionInputs_1.actionInputs.searchPrefix));
             const latest = byPrefix.sort((a, b) => new Date(b.created_at).valueOf() - new Date(a.created_at).valueOf());
             ghActions.info(`Retrieving release by prefix ${latest}...`);
