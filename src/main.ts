@@ -54,6 +54,18 @@ async function runImpl() {
     } else if (context.sha) {
         ghActions.info(`Retrieving release for current commit ${context.sha}...`);
         releaseResponse = await findReleaseByCommitSha(github, owner, repo, context.sha);
+    } else if (actionInputs.searchPrefix) {
+        const releases = await github.paginate("GET /repos/{owner}/{repo}/releases", {
+            ...context.repo,
+            per_page: 100,
+        });
+        const byPrefix = releases.filter(
+            (release) => release.name.includes(actionInputs.searchPrefix)
+        );
+        const latest = byPrefix.sort(
+            (a,b) => new Date(b.created_at) - new Date(a.created_at)
+        );
+        releaseResponse = latest[0]
     } else {
         throw new Error('No inputs set, context.sha is empty');
     }
