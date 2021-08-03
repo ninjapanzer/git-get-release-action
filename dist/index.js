@@ -160,6 +160,7 @@ function runImpl() {
             const releases = yield github.paginate("GET /repos/{owner}/{repo}/releases", Object.assign(Object.assign({}, github_1.context.repo), { per_page: 100 }));
             const byPrefix = releases.filter((release) => release.name.includes(actionInputs_1.actionInputs.searchPrefix));
             const latest = byPrefix.sort((a, b) => new Date(b.created_at).valueOf() - new Date(a.created_at).valueOf());
+            ghActions.info(`Retrieving release by prefix ${latest}...`);
             releaseResponse = latest[0];
         }
         else if (github_1.context.sha) {

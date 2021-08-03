@@ -62,6 +62,7 @@ async function runImpl() {
         const latest = byPrefix.sort(
             (a,b): number => new Date(b.created_at).valueOf() - new Date(a.created_at).valueOf()
         );
+        ghActions.info(`Retrieving release by prefix ${latest}...`);
         releaseResponse = latest[0]
     } else if (context.sha) {
         ghActions.info(`Retrieving release for current commit ${context.sha}...`);
